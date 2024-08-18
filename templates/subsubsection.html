@@ -38,8 +38,8 @@
         <header class="py-5 bg-light border-bottom mb-4">
             <div class="container">
                 <div class="text-center my-5">
-                    <h1 class="fw-bolder">{{section.replace('_', ' ').capitalize()}}</h1>
-                    <p class="lead mb-0">{{structure[section]['description']}}</p>
+                    <h1 class="fw-bolder">{{subsubsection.replace('_', ' ').capitalize()}}</h1>
+                    <p class="lead mb-0">{{structure[subsubsection]['description']}}</p>
                 </div>
             </div>
         </header>
@@ -51,10 +51,10 @@
                     <div class="row">
                         <div>
                             <!-- Blog post-->
-                            {% for subsection in structure[section]['dir'] %}
+                            {% for post in structure[subsubsection]['dir'] %}
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <h2 class="card-title h4"><a href="/{{section}}/{{subsection.replace(' ', '-').lower()}}">{{subsection.replace('_', ' ').capitalize()}}</a></h2>
+                                    <h2 class="card-title h4"><a href="/{{post.replace(' ', '-').lower()}}">{{post.replace('_', ' ').capitalize()}}</a></h2>
                                     <p class="card-text">{{structure[subsection]['description']}}</p>
                                 </div>
                             </div>

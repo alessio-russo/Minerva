@@ -7,9 +7,8 @@
         <meta name="author" content="" />
         <title>Blog Home - Start Bootstrap Template</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/images/favicon.ico')}}" />
         <!-- Core theme CSS (includes Bootstrap)-->
-
         <link href="{{url_for('static', filename='css/styles.css')}}" rel="stylesheet" />
     </head>
     <body>
@@ -51,11 +50,11 @@
                     <div class="row">
                         <div>
                             <!-- Blog post-->
-                            {% for subsection in structure[subsection]['dir'] %}
+                            {% for subsubsection in structure[subsection]['dir'] %}
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <h2 class="card-title h4"><a href="/{{subsection.replace(' ', '-').lower()}}">{{subsection.replace('_', ' ').capitalize()}}</a></h2>
-                                    <p class="card-text">{{structure[subsection]['description']}}</p>
+                                    <h2 class="card-title h4"><a href="/{{section}}/{{subsection}}/{{subsubsection.replace(' ', '_').lower()}}">{{subsubsection.replace('_', ' ').capitalize()}}</a></h2>
+                                    <p class="card-text">{{structure[subsubsection]['description']}}</p>
                                 </div>
                             </div>
                             {% endfor %}

@@ -24,6 +24,10 @@ def section(sec):
 def subsection(sec, subsec):
     return render_template('subsection.html', structure=structure, section=sec, subsection=subsec)
 
+@app.route('/<sec>/<subsec>/<subsubsec>')
+def subsubsection(sec, subsec, subsubsec):
+    return render_template('subsubsection.html', structure=structure, section=sec, subsection=subsec, subsubsection=subsubsec)
+
 
 @app.route('/post')
 def post():
