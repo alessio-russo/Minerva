@@ -20,7 +20,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="/">Home</a></li>
                         <!--<li class="nav-item"><a class="nav-link" href="#">Other link</a></li>-->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
@@ -38,8 +38,8 @@
         <header class="py-5 bg-light border-bottom mb-4">
             <div class="container">
                 <div class="text-center my-5">
-                    <h1 class="fw-bolder">Welcome to Minerva!</h1>
-                    <p class="lead mb-0">An open source framework for automated blogs creation</p>
+                    <h1 class="fw-bolder">{{section.replace('_', ' ').capitalize()}}</h1>
+                    <p class="lead mb-0">{{structure[section]['description']}}</p>
                 </div>
             </div>
         </header>
@@ -51,11 +51,11 @@
                     <div class="row">
                         <div>
                             <!-- Blog post-->
-                            {% for category in structure['content']['dir'] %}
+                            {% for subsection in structure[section]['dir'] %}
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <h2 class="card-title h4"><a href="/{{category.replace(' ', '-').lower()}}">{{category.replace('_', ' ').capitalize()}}</a></h2>
-                                    <p class="card-text">{{structure[category]['description']}}</p>
+                                    <h2 class="card-title h4"><a href="/{{section}}/{{subsection.replace(' ', '-').lower()}}">{{subsection.replace('_', ' ').capitalize()}}</a></h2>
+                                    <p class="card-text">{{structure[subsection]['description']}}</p>
                                 </div>
                             </div>
                             {% endfor %}
