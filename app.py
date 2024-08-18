@@ -1,64 +1,9 @@
 from flask import Flask, render_template, url_for
-import os
-import json
-
-
-def scan(root: str):
-    parent = root.split("/")[-1]
-    parent = parent.replace(' ', '_')
-    parent = parent.lower()
-    result = f"\"{parent}\": "
-    result += "{ \"dir\" : ["
-    folder = os.listdir(root)
-    try:
-        folder.remove("description")
-    except:
-        pass
-    subfolders = []
-
-    for i, elem in enumerate(folder):
-        if not elem.startswith("_"):
-
-            if os.path.isdir(f"{root}/{elem}"):
-                subfolders.append(f"{root}/{elem}")
-
-            elem = elem.replace(' ', '_')
-            elem = elem.lower()
-
-            result += f"\"{elem}\""
-
-            if i != len(folder) - 1:
-                result += ","
-    result += "]"
-    try:
-        with open(f"{root}/description", "r") as f:
-
-            result += ", \"description\":"
-            result += f"\"{f.read()}\""
-            result += "}"
-    except:
-        result += "}"
-
-    if len(subfolders) != 0:
-        result += ","
-
-        for i, dir in enumerate(subfolders):
-            result += scan(dir)
-
-            if i != len(subfolders) - 1:
-                result += ","
-
-    return result
-
-
-root = f"{os.getcwd()}/content"
-content = "{"
-content += scan(root)
-content += "}"
-structure = json.loads(content)
+from lib.scanner import Scanner
 
 app = Flask(__name__)
-
+scanner = Scanner('content')
+structure = scanner.get_structure()
 
 @app.route('/str')
 def get_struct():
