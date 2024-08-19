@@ -53,8 +53,18 @@
                             {% for subsubsection in structure[subsection]['dir'] %}
                             <div class="card mb-4">
                                 <div class="card-body">
+                                    <h5>Subsubsection</h5>
                                     <h2 class="card-title h4"><a href="/{{section}}/{{subsection}}/{{subsubsection.replace(' ', '_').lower()}}">{{subsubsection.replace('_', ' ').capitalize()}}</a></h2>
                                     <p class="card-text">{{structure[subsubsection]['description']}}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            {% for subsection in structure[section]['files'] %}
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <h5>Post</h5>
+                                    <h2 class="card-title h4"><a href="/{{section}}/article/{{subsection.replace(' ', '-').replace('.md', '').lower()}}">{{subsection.replace('_', ' ').replace('.md', '').capitalize()}}</a></h2>
                                 </div>
                             </div>
                             {% endfor %}
