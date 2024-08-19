@@ -18,7 +18,9 @@ def index():
 @app.route('/<sec>')
 def section(sec):
     return render_template('section.html', structure=structure, section=sec)
-
+@app.route('/<sec>/article/<post>')
+def section_post(sec, post):
+    return render_template('post.html')
 
 @app.route('/<sec>/<subsec>')
 def subsection(sec, subsec):
@@ -29,9 +31,7 @@ def subsubsection(sec, subsec, subsubsec):
     return render_template('subsubsection.html', structure=structure, section=sec, subsection=subsec, subsubsection=subsubsec)
 
 
-@app.route('/post')
-def post():
-    return render_template('post.html')
+
 
 
 if __name__ == '__main__':
