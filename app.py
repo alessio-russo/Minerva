@@ -33,13 +33,13 @@ def section_post(sec, post):
     post = post.replace("_", " ")
     sec = sec.replace("_", " ")
     with open(f"content/{sec}/{post}.md", "r") as file:
-        content = markdown.markdown(file.read(),  extensions=["fenced_code", "codehilite", 'mdx_math'], extension_configs={
-        'mdx-math': {'enable_dollar_delimiter': True}
-    })
-    formatter = HtmlFormatter(style="emacs", full=True, cssclass="codehilite")
+        md_template_string = markdown.markdown(file.read(),  extensions=["fenced_code", "codehilite", 'mdx_math'], extension_configs={
+        'mdx-math': {'enable_dollar_delimiter': True}})
+
+    formatter = HtmlFormatter(style="friendly", full=True, cssclass="codehilite")
     css_string = formatter.get_style_defs()
     md_css_string = "<style>" + css_string + "</style>"
-    content = md_css_string + content
+    content = md_css_string + md_template_string
 
     data = os.path.getmtime(f"content/{sec}/{post}.md")
     data = time.ctime(data)
