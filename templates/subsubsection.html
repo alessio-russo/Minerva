@@ -50,12 +50,11 @@
                 <div>
                     <div class="row">
                         <div>
-                            <!-- Blog post-->
-                            {% for post in structure[subsubsection]['dir'] %}
+                            {% for post in structure[subsubsection]['files'] %}
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <h2 class="card-title h4"><a href="/{{post.replace(' ', '-').lower()}}">{{post.replace('_', ' ').capitalize()}}</a></h2>
-                                    <p class="card-text">{{structure[subsection]['description']}}</p>
+                                    <h5>Post</h5>
+                                    <h2 class="card-title h4"><a href="/{{section}}/{{subsection}}/{{subsubsection}}/article/{{post.replace(' ', '-').replace('.md', '').lower()}}">{{post.replace('_', ' ').replace('.md', '').capitalize()}}</a></h2>
                                 </div>
                             </div>
                             {% endfor %}

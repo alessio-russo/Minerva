@@ -60,11 +60,11 @@
                             </div>
                             {% endfor %}
 
-                            {% for subsection in structure[section]['files'] %}
+                            {% for post in structure[subsection]['files'] %}
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <h5>Post</h5>
-                                    <h2 class="card-title h4"><a href="/{{section}}/article/{{subsection.replace(' ', '-').replace('.md', '').lower()}}">{{subsection.replace('_', ' ').replace('.md', '').capitalize()}}</a></h2>
+                                    <h2 class="card-title h4"><a href="/{{section}}/{{subsection}}/article/{{post.replace(' ', '-').replace('.md', '').lower()}}">{{post.replace('_', ' ').replace('.md', '').capitalize()}}</a></h2>
                                 </div>
                             </div>
                             {% endfor %}

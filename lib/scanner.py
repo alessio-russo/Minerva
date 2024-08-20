@@ -16,7 +16,7 @@ class Scanner:
         result += f"\"{parent}\": " + "{ "
 
         folder = os.listdir(path)
-
+        folder.sort()
         try:
             folder.remove("description")
         except:
