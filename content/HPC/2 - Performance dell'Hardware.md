@@ -59,7 +59,7 @@ Dove:
 
 - **Arithmetic Intensity** è definita come il rapporto tra il numero di operazioni in virgola mobile (FLOPS) e la quantità di dati trasferiti (in byte), ossia quante operazioni possono essere eseguite per ogni byte di dati trasferiti. Questo parametro è cruciale per comprendere l'efficienza computazionale di un kernel, poiché valuta l'equilibrio tra calcolo e trasferimento dati
 
-<img src="{{url_for('static', filename='roofline-analysis.png')}}" alt="culo bello"> 
+<img width="400" src="../../static/_IMG/roofline-analysis.png">
 
 Il grafico Roofline rappresenta sulle ordinate la capacità di calcolo (FLOP/s) e sulle ascisse l'intensità aritmetica. Due "tetti" dominano il grafico: il primo è la massima performance di calcolo (Peak FLOP/s), e il secondo è il prodotto della larghezza di banda della memoria per l'intensità aritmetica. L'intersezione tra queste due metriche determina il limite teorico delle prestazioni per un dato kernel.
 
@@ -120,5 +120,5 @@ Le reti ad alta velocità giocano un ruolo cruciale nei moderni ambienti di High
 
 I **benchmark** sono strumenti essenziali nell'ambito dell'informatica per valutare le prestazioni reali (sustained performance) di sistemi di calcolo attraverso una serie di test software standardizzati. Questi test misurano come i computer eseguono diverse operazioni, fornendo una base di confronto oggettiva tra diversi hardware e configurazioni di sistema. Due dei più noti e utilizzati benchmark nel settore sono i test **SPEC CPU** e **LINPACK**.
 
-![Culo](../static/_IMG/roofline-analysis.png)
+
 

@@ -10,8 +10,9 @@ import markdown
 import markdown.extensions.fenced_code
 import markdown.extensions.codehilite
 
+root = 'content'
 app = Flask(__name__)
-scanner = Scanner('content')
+scanner = Scanner(root)
 structure = scanner.get_structure()
 
 @app.route('/str')
@@ -32,7 +33,7 @@ def section(sec):
 def section_post(sec, post):
     post = post.replace("_", " ")
     sec = sec.replace("_", " ")
-    with open(f"content/{sec}/{post}.md", "r") as file:
+    with open(f"{root}/{sec}/{post}.md", "r") as file:
         md_template_string = markdown.markdown(file.read(),  extensions=["fenced_code", "codehilite", 'mdx_math'], extension_configs={
         'mdx-math': {'enable_dollar_delimiter': True}})
 
@@ -41,7 +42,7 @@ def section_post(sec, post):
     md_css_string = "<style>" + css_string + "</style>"
     content = md_css_string + md_template_string
 
-    data = os.path.getmtime(f"content/{sec}/{post}.md")
+    data = os.path.getmtime(f"{root}/{sec}/{post}.md")
     data = time.ctime(data)
     data = datetime.strptime(data, "%a %b %d %H:%M:%S %Y")
     return render_template('post.html', structure=structure, title=post, data=data, content=content)
@@ -72,5 +73,4 @@ def subsubsection_post(sec, subsec, subsubsec, post):
 ## END SUBSUBSECTION AREA
 
 if __name__ == '__main__':
-    Markdown(app)
     app.run(host="0.0.0.0", port=8080, debug=True)
