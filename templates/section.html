@@ -65,7 +65,7 @@
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <h5>Post</h5>
-                                    <h2 class="card-title h4"><a href="/{{section}}/article/{{subsection.replace(' ', '-').replace('.md', '').lower()}}">{{subsection.replace('_', ' ').replace('.md', '').capitalize()}}</a></h2>
+                                    <h2 class="card-title h4"><a href="/{{section}}/article/{{subsection.replace(' ', '-').replace('.md', '').lower()}}">{{subsection.replace('_', ' ').replace('.md', '')[2:].capitalize()}}</a></h2>
                                 </div>
                             </div>
                             {% endfor %}

@@ -1,14 +1,6 @@
 from flask import Flask, render_template, url_for
-from pygments.formatters import HtmlFormatter
-
-import os
-import time
-from datetime import datetime
-
 from lib.scanner import Scanner
-import markdown
-import markdown.extensions.fenced_code
-import markdown.extensions.codehilite
+from lib.post import Post
 
 root = 'content'
 app = Flask(__name__)
@@ -33,19 +25,9 @@ def section(sec):
 def section_post(sec, post):
     post = post.replace("_", " ")
     sec = sec.replace("_", " ")
-    with open(f"{root}/{sec}/{post}.md", "r") as file:
-        md_template_string = markdown.markdown(file.read(),  extensions=["fenced_code", "codehilite", 'mdx_math'], extension_configs={
-        'mdx-math': {'enable_dollar_delimiter': True}})
-
-    formatter = HtmlFormatter(style="friendly", full=True, cssclass="codehilite")
-    css_string = formatter.get_style_defs()
-    md_css_string = "<style>" + css_string + "</style>"
-    content = md_css_string + md_template_string
-
-    data = os.path.getmtime(f"{root}/{sec}/{post}.md")
-    data = time.ctime(data)
-    data = datetime.strptime(data, "%a %b %d %H:%M:%S %Y")
-    return render_template('post.html', structure=structure, title=post, data=data, content=content)
+    post = Post(filename=f"{root}/{sec}/{post}.md")
+    return render_template('post.html', structure=structure,
+                           title=post.get_title(), data=post.get_m_time(), content=post.get_content())
 
 ## END SECTION AREA
 
@@ -56,7 +38,12 @@ def subsection(sec, subsec):
 
 @app.route('/<sec>/<subsec>/article/<post>')
 def subsection_post(sec, subsec, post):
-    return render_template('post.html', structure=structure)
+    post = post.replace("_", " ")
+    sec = sec.replace("_", " ")
+    subsec = subsec.replace("_", " ")
+    post = Post(filename=f"{root}/{sec}/{subsec}/{post}.md")
+    return render_template('post.html', structure=structure,
+                           title=post.get_title(), data=post.get_m_time(), content=post.get_content())
 
 ## END SUBSECTION AREA
 
@@ -68,7 +55,13 @@ def subsubsection(sec, subsec, subsubsec):
 
 @app.route('/<sec>/<subsec>/<subsubsec>/article/<post>')
 def subsubsection_post(sec, subsec, subsubsec, post):
-    return render_template('post.html', structure=structure)
+    post = post.replace("_", " ")
+    sec = sec.replace("_", " ")
+    subsec = subsec.replace("_", " ")
+    subsubsec = subsubsec.replace("_", " ")
+    post = Post(filename=f"{root}/{sec}/{subsec}/{subsubsec}/{post}.md")
+    return render_template('post.html', structure=structure,
+                           title=post.get_title(), data=post.get_m_time(), content=post.get_content())
 
 ## END SUBSUBSECTION AREA
 
