@@ -24,8 +24,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sections</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                {% for section in site_map['content']['folders'] %}
-                                <li><a class="dropdown-item" href="/{{section.replace(" ", "_")}}">{{ section.capitalize()}}</a></li>
+                                {% for section in site_map[content_folder]['subfolders'] %}
+                                <li><a class="dropdown-item" href="/{{section.replace(" ", "_")}}">{{section.capitalize()}}</a></li>
                                 {% endfor %}
                             </ul>
                         </li>
@@ -50,11 +50,11 @@
                     <div class="row">
                         <div>
                             <!-- Blog sections -->
-                            {% for section in site_map['content']['folders'] %}
+                            {% for section in site_map[content_folder]['subfolders']%}
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <h2 class="card-title h4"><a href="/{{section.replace(" ", "_")}}">{{section.capitalize()}}</a></h2>
-                                    <p class="card-text">{{site_map[section]['description']}}</p>
+                                    <p class="card-text">{{site_map[content_folder]['subfolders'][section]['description']}}</p>
                                 </div>
                             </div>
                             {% endfor %}
