@@ -30,5 +30,4 @@ class Post:
         return data
 
     def get_title(self) -> str:
-        filename = self._filename.split("/")[-1].replace(".md", "")
-        return filename[filename.find('.')+1:].capitalize()
+        return self._filename.split(os.sep)[-1].replace(".md", "").capitalize()

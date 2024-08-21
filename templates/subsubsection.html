@@ -23,10 +23,10 @@
                         <li class="nav-item"><a class="nav-link" aria-current="page" href="/">Home</a></li>
                         <!--<li class="nav-item"><a class="nav-link" href="#">Other link</a></li>-->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sections</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                {% for category in structure['content']['dir'] %}
-                                <li><a class="dropdown-item" href="/{{category.replace(' ', '-').lower()}}">{{ category.replace('_', ' ').capitalize() }}</a></li>
+                                {% for section in site_map['content']['folders'] %}
+                                <li><a class="dropdown-item" href="/{{section.replace(' ', '_')}}">{{ section.capitalize() }}</a></li>
                                 {% endfor %}
                             </ul>
                         </li>
@@ -39,7 +39,7 @@
             <div class="container">
                 <div class="text-center my-5">
                     <h1 class="fw-bolder">{{subsubsection.replace('_', ' ').capitalize()}}</h1>
-                    <p class="lead mb-0">{{structure[subsubsection]['description']}}</p>
+                    <p class="lead mb-0">{{site_map[subsubsection]['description']}}</p>
                 </div>
             </div>
         </header>
@@ -49,17 +49,18 @@
                 <!-- Blog entries-->
                 <div>
                     <div class="row">
-                        <div>
-                            {% for post in structure[subsubsection]['files'] %}
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5>Post</h5>
-                                    <h2 class="card-title h4"><a href="/{{section}}/{{subsection}}/{{subsubsection}}/article/{{post.replace(' ', '-').replace('.md', '').lower()}}">{{post.replace('_', ' ').replace('.md', '').capitalize()}}</a></h2>
-                                </div>
+                        {% for post in site_map[subsubsection]['posts'] %}
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5>Post</h5>
+                                <h2 class="card-title h4">
+                                    <a href="/{{section.replace(' ', '_')}}/{{subsection.replace(' ', '_')}}/{{subsubsection.replace(' ', '_')}}/post/{{post.replace(' ', '_')}}">
+                                        {{post.capitalize()}}
+                                    </a>
+                                </h2>
                             </div>
-                            {% endfor %}
-
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

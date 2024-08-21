@@ -1,6 +1,5 @@
 import os
 import json
-import lib.system as system
 
 
 class Mapper:
@@ -17,22 +16,20 @@ class Mapper:
 
     def _generate_folder_map(self, path: str):
 
-        # FOLDER PREPROCESSING
-        parent = path.split(os.sep)[-1]
-        parent = parent[parent.find("%") + 1:]
-        parent = parent.lower()
+        folder = path.split(os.sep)[-1]
 
         folder_map = "," if path != self._content_folder else ""
-        folder_map += f"\"{parent}\": " + "{ "
+        folder_map += f"\"{folder}\": " + "{ "
 
         folder = os.listdir(path)
         folder.sort()
 
         # SEARCHING FOR DESCRIPTION FILE
         description = None
-        if os.path.exists(f"{path}/description"):
+        description_path = path+os.sep+"description"
+        if os.path.exists(description_path):
             folder.remove("description")
-            with open(f"{path}/description", "r") as f:
+            with open(description_path, "r") as f:
                 description = f.read()
 
         subfolders = []
@@ -42,21 +39,16 @@ class Mapper:
         for item in folder:
             if not item.startswith("%"):  # USED TO EXCLUDE A FOLDER FROM MAPPING
 
-                item = item.split("%")[1]
-                path = system.get_item_path(root=path, item=item)
-
-                if path is not None:
-                    if os.path.isdir(path):
-                        subfolders.append(path)
-                    elif item.endswith(".md"):
-                        md_files.append(item)
+                if os.path.isdir(path + os.sep + item):
+                    subfolders.append(path + os.sep + item)
+                elif item.endswith(".md"):
+                    md_files.append(item)
 
         # ITERATING THROW THE MD FILES
         if len(md_files) > 0:
             folder_map += " \"posts\" : ["
             for i, file in enumerate(md_files):
                 file = file.replace('.md', '')
-                file = file.lower()
 
                 folder_map += f"\"{file}\""
 
@@ -70,8 +62,7 @@ class Mapper:
                 folder_map += " , "
             folder_map += "\"folders\" : ["
             for i, folder in enumerate(subfolders):
-                folder = folder.lower()
-                folder = folder.split(os.sep)[-1].split("%")[1]
+                folder = folder.split(os.sep)[-1]
                 folder_map += f"\"{folder}\""
 
                 if i != len(subfolders) - 1:
