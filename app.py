@@ -1,32 +1,34 @@
 from flask import Flask, render_template, url_for
-from lib.scanner import Scanner
+from lib.mapper import Mapper
 from lib.post import Post
 
-root = 'content'
+content_folder = 'content'
 app = Flask(__name__)
-scanner = Scanner(root)
-structure = scanner.get_structure()
+mapper = Mapper(content_folder)
+site_map = mapper.get_site_map()
 
-@app.route('/str')
-def get_struct():
-    return structure
+@app.route('/map')
+def get_site_map():
+    return site_map
 
 
 @app.route('/')
 def index():
-    return render_template('index.html', structure=structure)
+    return render_template('index.html', site_map=site_map)
 
 ## SECTION AREA
 
 @app.route('/<sec>')
 def section(sec):
-    return render_template('section.html', structure=structure, section=sec)
+    sec = sec.replace("_", " ")
+    return render_template('section.html', site_map=site_map, section=sec)
+
 @app.route('/<sec>/article/<post>')
 def section_post(sec, post):
     post = post.replace("_", " ")
     sec = sec.replace("_", " ")
-    post = Post(filename=f"{root}/{sec}/{post}.md")
-    return render_template('post.html', structure=structure,
+    post = Post(filename=f"{content_folder}/{sec}/{post}.md")
+    return render_template('post.html', site_map=site_map,
                            title=post.get_title(), data=post.get_m_time(), content=post.get_content())
 
 ## END SECTION AREA
@@ -36,12 +38,12 @@ def section_post(sec, post):
 def subsection(sec, subsec):
     return render_template('subsection.html', structure=structure, section=sec, subsection=subsec)
 
-@app.route('/<sec>/<subsec>/article/<post>')
+@app.route('/<sec>/<subsec>/post/<post>')
 def subsection_post(sec, subsec, post):
     post = post.replace("_", " ")
     sec = sec.replace("_", " ")
     subsec = subsec.replace("_", " ")
-    post = Post(filename=f"{root}/{sec}/{subsec}/{post}.md")
+    post = Post(filename=f"{content_folder}/{sec}/{subsec}/{post}.md")
     return render_template('post.html', structure=structure,
                            title=post.get_title(), data=post.get_m_time(), content=post.get_content())
 
@@ -59,7 +61,7 @@ def subsubsection_post(sec, subsec, subsubsec, post):
     sec = sec.replace("_", " ")
     subsec = subsec.replace("_", " ")
     subsubsec = subsubsec.replace("_", " ")
-    post = Post(filename=f"{root}/{sec}/{subsec}/{subsubsec}/{post}.md")
+    post = Post(filename=f"{content_folder}/{sec}/{subsec}/{subsubsec}/{post}.md")
     return render_template('post.html', structure=structure,
                            title=post.get_title(), data=post.get_m_time(), content=post.get_content())
 

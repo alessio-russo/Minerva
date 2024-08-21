@@ -24,7 +24,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                {% for category in structure['content']['dir'] %}
+                                {% for category in site_map['content']['dir'] %}
                                 <li><a class="dropdown-item" href="/{{category.replace(' ', '-').lower()}}">{{ category.replace('_', ' ').capitalize() }}</a></li>
                                 {% endfor %}
                             </ul>

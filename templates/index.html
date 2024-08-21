@@ -22,10 +22,10 @@
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
                         <!--<li class="nav-item"><a class="nav-link" href="#">Other link</a></li>-->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sections</a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                {% for category in structure['content']['dir'] %}
-                                <li><a class="dropdown-item" href="/{{category.replace(' ', '-').lower()}}">{{ category.replace('_', ' ').capitalize() }}</a></li>
+                                {% for section in site_map['content']['folders'] %}
+                                <li><a class="dropdown-item" href="/{{section.replace(" ", "_")}}">{{ section.capitalize()}}</a></li>
                                 {% endfor %}
                             </ul>
                         </li>
@@ -38,7 +38,7 @@
             <div class="container">
                 <div class="text-center my-5">
                     <h1 class="fw-bolder">Welcome to Minerva!</h1>
-                    <p class="lead mb-0">An open source framework for automated blogs creation</p>
+                    <p class="lead mb-0">An open source software for automated blogs creation</p>
                 </div>
             </div>
         </header>
@@ -49,12 +49,12 @@
                 <div>
                     <div class="row">
                         <div>
-                            <!-- Blog post-->
-                            {% for category in structure['content']['dir'] %}
+                            <!-- Blog sections -->
+                            {% for section in site_map['content']['folders'] %}
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <h2 class="card-title h4"><a href="/{{category.replace(' ', '-').lower()}}">{{category.replace('_', ' ').capitalize()}}</a></h2>
-                                    <p class="card-text">{{structure[category]['description']}}</p>
+                                    <h2 class="card-title h4"><a href="/{{section.replace(" ", "_")}}">{{section.capitalize()}}</a></h2>
+                                    <p class="card-text">{{site_map[section]['description']}}</p>
                                 </div>
                             </div>
                             {% endfor %}
