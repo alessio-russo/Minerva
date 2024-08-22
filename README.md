@@ -1,6 +1,6 @@
-<img src="/static/images/logo.svg" width="200" style="margin: auto">
-
 # Minerva - A flask based tool for automating blogs creation
+
+<img src="/static/images/logo.svg" width="300">
 
 ## Overview
 
