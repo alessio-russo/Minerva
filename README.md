@@ -1,4 +1,5 @@
 # Minerva - A flask based tool for automating blogs creation
+![logo.svg](/static/images/logo.svg)
 ## Overview
 
 Minerva is an open-source project designed to streamline the process of creating and publishing blog posts. 
