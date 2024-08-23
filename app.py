@@ -1,24 +1,27 @@
 from flask import Flask, render_template
 from lib.utils.mapper import Mapper
+from lib.utils.data.database import Database
+from lib.blog.section import Section
+from lib.blog.subsection import Subsection
+from lib.blog.subsubsection import Subsubsection
 from lib.blog.post import Post
 import os
 
 CONTENT_FOLDER = 'content'
 app = Flask(__name__)
-mapper = Mapper(CONTENT_FOLDER)
-site_map = mapper.get_site_map()
-
+mapper = Mapper()
+database = Database()
 
 @app.route('/')
 def index():
-    return render_template('index.html', site_map=site_map, content_folder=CONTENT_FOLDER)
+    return render_template('index.html', site_map=mapper.site_map, content_folder=CONTENT_FOLDER)
 
 
 # SECTION AREA =====================================
 @app.route('/<sec>')
 def section(sec):
     section_name = sec.replace("_", " ")
-    return render_template('section.html', content_folder=CONTENT_FOLDER, site_map=site_map,
+    return render_template('section.html', content_folder=CONTENT_FOLDER, site_map=mapper.site_map,
                            section_name=section_name)
 
 
@@ -26,9 +29,9 @@ def section(sec):
 def section_post(sec, post):
     section_name = sec.replace("_", " ")
     post = post.replace("_", " ")
-    post_path = site_map[CONTENT_FOLDER]['subfolders'][section_name]['posts'][post]['path']
+    post_path = mapper.site_map[CONTENT_FOLDER]['subfolders'][section_name]['posts'][post]['path']
     post = Post(title=post, path=post_path)
-    return render_template('post.html', site_map=site_map,
+    return render_template('post.html', site_map=mapper.site_map,
                            title=post.get_title(), data=post.get_m_time(), content=post.get_content())
 
 
@@ -40,7 +43,7 @@ def section_post(sec, post):
 def subsection(sec, subsec):
     section_name = sec.replace("_", " ")
     subsection_name = subsec.replace("_", " ")
-    return render_template('subsection.html', content_folder=CONTENT_FOLDER, site_map=site_map,
+    return render_template('subsection.html', content_folder=CONTENT_FOLDER, site_map=mapper.site_map,
                            section_name=section_name, subsection_name=subsection_name)
 
 
@@ -49,10 +52,12 @@ def subsection_post(sec, subsec, post):
     section_name = sec.replace("_", " ")
     subsection_name = subsec.replace("_", " ")
     post = post.replace("_", " ")
-    post_path = site_map[CONTENT_FOLDER]['subfolders'][section_name]['subfolders'][subsection_name]['posts'][post]['path']
+    post_path = \
+    mapper.site_map[CONTENT_FOLDER]['subfolders'][section_name]['subfolders'][subsection_name]['posts'][post]['path']
     post = Post(title=post, path=post_path)
-    return render_template('post.html', site_map=site_map,
+    return render_template('post.html', site_map=mapper.site_map,
                            title=post.get_title(), data=post.get_m_time(), content=post.get_content())
+
 
 # END SUBSECTION AREA =====================================
 
@@ -63,9 +68,10 @@ def subsubsection(sec, subsec, subsubsec):
     section_name = sec.replace("_", " ")
     subsection_name = subsec.replace("_", " ")
     subsubsection_name = subsubsec.replace("_", " ")
-    return render_template('subsubsection.html', content_folder=CONTENT_FOLDER, site_map=site_map,
+    return render_template('subsubsection.html', content_folder=CONTENT_FOLDER, site_map=mapper.site_map,
                            section_name=section_name, subsection_name=subsection_name,
                            subsubsection_name=subsubsection_name)
+
 
 @app.route('/<sec>/<subsec>/<subsubsec>/post/<post>')
 def subsubsection_post(sec, subsec, subsubsec, post):
@@ -73,18 +79,22 @@ def subsubsection_post(sec, subsec, subsubsec, post):
     subsection_name = subsec.replace("_", " ")
     subsubsection_name = subsubsec.replace("_", " ")
     post = post.replace("_", " ")
-    post_path = site_map[CONTENT_FOLDER]['subfolders'][section_name]['subfolders'][subsection_name]['subfolders'][subsubsection_name]['posts'][post]['path']
+    post_path = \
+    mapper.site_map[CONTENT_FOLDER]['subfolders'][section_name]['subfolders'][subsection_name]['subfolders'][
+        subsubsection_name]['posts'][post]['path']
     post = Post(title=post, path=post_path)
-    return render_template('post.html', site_map=site_map,
+    return render_template('post.html', site_map=mapper.site_map,
                            title=post.get_title(), data=post.get_m_time(), content=post.get_content())
 
 
 # END SUBSUBSECTION AREA =====================================
 
-@app.route('/map')
-def get_site_map():
-    return site_map
+@app.route('/sec')
+def get_sec():
+
+    return f"{database.print()}"
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    mapper.generate_site_map(content_folder=CONTENT_FOLDER)
+    app.run(host="0.0.0.0", port=8080, use_reloader=False)
